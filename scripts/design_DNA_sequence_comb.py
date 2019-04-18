@@ -10,6 +10,7 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import IUPAC
 from Bio.SeqFeature import SeqFeature, FeatureLocation
+import string
 
 __author__  = 'Sarah Guiziou <guiziou@cbs.cnrs.fr>'
 __license__ = 'MIT'
@@ -38,8 +39,16 @@ def design_DNAsequence(inp, nbr_strain, output, path, name_directory):
   
     ###############################################################################
     # SEQUENCE DEFINITION
+    # To reverse complement sequences
+    old_chars = "ACGTacgt"
+    replace_chars = "TGCAtgca"
+    tab = string.maketrans(old_chars,replace_chars)  
     
     name_int=['Bxb1','Tp901','Int5','Int7','Int4','Int3']
+    
+    not_orientation=['PR','PF','BF','PR','BF','BF']
+    
+    id_orientation=['PR','BF','PF','PR','BF','BF']
     
     # define attB sites
     BF_site=[]
@@ -62,6 +71,12 @@ def design_DNAsequence(inp, nbr_strain, output, path, name_directory):
     attB_int3='gtttgtaaaggagactgataatggcatgtacaactatactcgtcggtaaaaaggcatcttat'
     BF_site.append(attB_int3)
       
+    # attB reverse site
+    BR_site=[]
+    
+    for a in range(len(BF_site)):
+        BR_site.append(BF_site[a].translate(tab)[::-1])
+        
     # define attP sites  
     PF_site=[]
     # Bxb1=1
@@ -81,7 +96,13 @@ def design_DNAsequence(inp, nbr_strain, output, path, name_directory):
     PF_site.append(attP_Int4)
     #int3=6
     attP_Int3='atggataaaaaaatacagcgtttttcatgtacaactatactagttgtagtgcctaaataatgctt'
-    PF_site.append(attP_Int3)    
+    PF_site.append(attP_Int3)   
+    
+     # attP reverse site
+    PR_site=[]
+    
+    for a in range(len(PF_site)):
+        PR_site.append(PF_site[a].translate(tab)[::-1])
                
     # define terminators
     
@@ -134,7 +155,7 @@ def design_DNAsequence(inp, nbr_strain, output, path, name_directory):
     sequence=[]
     
     # append spacer sp0
-    sequence.append([sp0,'spacer sp0'])
+    sequence.append([sp0,'spacer sp0',1])
     
     # number of ZERO correspond to number of NOT elements: total variables (0) - number of ONE (1)
     ZERO=int(inp[0])-int(inp[1])
@@ -144,32 +165,63 @@ def design_DNAsequence(inp, nbr_strain, output, path, name_directory):
     # Z corresponds to the indice of integrase to implement the NOT element
     for Z in reversed(range(0, ZERO)):
         # append to the design the attB site of NOT elements
-        sequence.append([BF_site[Z],'attB '+name_int[Z]])
+        if not_orientation[Z]=='BF':
+            sequence.append([BF_site[Z],'attB '+name_int[Z], 1])
+        elif not_orientation[Z]=='BR':
+            sequence.append([BR_site[Z],'attB '+name_int[Z], -1])
+        elif not_orientation[Z]=='PF':
+            sequence.append([PF_site[Z],'attP '+name_int[Z], 1])
+        elif not_orientation[Z]=='PR':
+            sequence.append([PR_site[Z],'attP '+name_int[Z], -1])            
         
     # append to the design the promoter P7 in fwd direction        
-    sequence.append([P7f,'promoter P7'])
+    sequence.append([P7f,'promoter P7', 1])
     
     # loop to generate all attP site for the NOT elements
     # between 0 to the number of NOT elements
     # Z corresponds to the indice of integrase to implement the NOT element      
     for Z in range(0,ZERO):
         # append attP site
-        sequence.append([PF_site[Z],'attP '+name_int[Z]])
+        if not_orientation[Z]=='BF':
+            sequence.append([PF_site[Z],'attP '+name_int[Z], 1])
+        elif not_orientation[Z]=='BR':
+            sequence.append([PR_site[Z],'attP '+name_int[Z], -1])
+        elif not_orientation[Z]=='PF':
+            sequence.append([BF_site[Z],'attB '+name_int[Z], 1])
+        elif not_orientation[Z]=='PR':
+            sequence.append([BR_site[Z],'attB '+name_int[Z], -1])  
 
     # loop to generate all IMPLY elements
     # O corresponds to the indice of integrase to implement the IMPLY element
     for O in range(ZERO, int(inp[0])):
         # add attB site+term+attP site
-        sequence.append([BF_site[O],'attB '+name_int[O]])
-        sequence.append([ter[O],name_ter[O]])
-        sequence.append([BF_site[O],'attP '+name_int[O]])
+        if id_orientation[O]=='BF':
+            sequence.append([BF_site[O],'attB '+name_int[O],1])
+            sequence.append([ter[O],name_ter[O],1])
+            sequence.append([PF_site[O],'attP '+name_int[O],1])
+
+        elif id_orientation[O]=='BR':
+            sequence.append([BR_site[O],'attB '+name_int[O],-1])
+            sequence.append([ter[O],name_ter[O],1])
+            sequence.append([PR_site[O],'attP '+name_int[O],-1])
+            
+        elif id_orientation[O]=='PF':
+            sequence.append([PF_site[O],'attP '+name_int[O],1])
+            sequence.append([ter[O],name_ter[O],1])
+            sequence.append([BF_site[O],'attB '+name_int[O],1])
+            
+        elif id_orientation[O]=='PR':
+            sequence.append([PF_site[O],'attP '+name_int[O],-1])
+            sequence.append([ter[O],name_ter[O],1])
+            sequence.append([BF_site[O],'attB '+name_int[O],-1]) 
+
         
     # append RiboJ, BCD2, sfGFP, spacer N at the end of the sequence
-    sequence.append([RiboJ, 'RiboJ'])
-    sequence.append([BCD2, 'BCD2'])
-    sequence.append([sfGFP, 'sfGFP'])
-    sequence.append([spN, 'spN'])
-    sequence.append([L3S3P00, 'Term L3S3P00'])
+    sequence.append([RiboJ, 'RiboJ',1])
+    sequence.append([BCD2, 'BCD2',1])
+    sequence.append([sfGFP, 'sfGFP',1])
+    sequence.append([L3S3P00, 'Term L3S3P00',1])
+    sequence.append([spN,'spacer spN',1])
     
     # initialization of the DNA sequence
     DNA_seq=''
@@ -182,7 +234,7 @@ def design_DNAsequence(inp, nbr_strain, output, path, name_directory):
     seq_final=Seq(DNA_seq, IUPAC.unambiguous_dna)
     record = SeqRecord(seq_final,
                    id='NA', # random accession number
-                   name='Strain'+nbr_strain+'_'+inp,
+                   name='Strain'+nbr_strain,
                    description='Sequence of the computational device in the strain'+nbr_strain+' to implement the Boolean function required')
     
     # initialization of the variable len_seq 
@@ -191,7 +243,7 @@ def design_DNAsequence(inp, nbr_strain, output, path, name_directory):
     # loop in sequence list to generate the genbank feature of the sequence
     for feat in sequence:
         
-        feature = SeqFeature(FeatureLocation(start=len_seq, end=len_seq+len(feat[0])), id=feat[1], type=feat[1])
+        feature = SeqFeature(FeatureLocation(start=len_seq, end=len_seq+len(feat[0])), id=feat[1], type=feat[1], strand=feat[2])
         record.features.append(feature)
         len_seq+=len(feat[0]) 
 
@@ -203,4 +255,4 @@ def design_DNAsequence(inp, nbr_strain, output, path, name_directory):
    
 """TEST of the design DNA function"""
     
-#design_DNAsequence('63','3','0000101010','../results/0/','0')    
+#design_DNAsequence('63','3','0000101010','../results/0/','0ff')    

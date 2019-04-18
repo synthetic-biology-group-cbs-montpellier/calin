@@ -106,7 +106,7 @@ def computation_device(inp, strain, int_list, title, name_directory, directory_n
     #name_input='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     
     for integrase in int_list:
-	i+=1
+        i+=1
         if integrase!='0':
             design_int.append({'type':'Promoter', 'name':'prom', 'fwd':True, 'opts':{'label':'P'+str(name_input[i-1]), 'label_x_offset':-2, 'label_y_offset':-6}})
             int_gene = {'type':'CDS', 'name':'cds', 'fwd':True, 'opts':{'color':col_map_matrix[int(integrase)-1], 'label_x_offset':-2, 'label_y_offset':-0.5, 'label':'int'+str(integrase),'label_style':'italic'}}
@@ -158,7 +158,7 @@ def computation_device(inp, strain, int_list, title, name_directory, directory_n
     
 """TEST FUNCTION"""
 
-#computation_device('55', 'hello', ['1', '2', '3','4','5'], 'hello', '../results', 'hello')
+#computation_device('10', 'hello', ['0', '1'], 'hello', '../results', 'hello')
 
 """"
 LEGEND

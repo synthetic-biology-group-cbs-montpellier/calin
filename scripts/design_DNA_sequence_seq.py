@@ -187,12 +187,14 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
             sequence.append([out_r[list_gene_state[2]-1], out_name[list_gene_state[2]-1], -1])
             sequence.append([spacer_RBSr, 'spacer RBS', -1])
             sequence.append([B0034r, 'B0034', -1])
+            sequence.append([BydvJr, 'BydvJ', -1])
         
-        sequence.append([BF_site[list_integrase[1]], 'attB '+name_int[list_integrase[1]],1])
+        sequence.append([BF_site[list_integrase[1]-1], 'attB '+name_int[list_integrase[1]-1],1])
         sequence.append([P6f, 'P6', 1])
-        sequence.append([BF_site[list_integrase[0]], 'attB '+name_int[list_integrase[0]],1])
+        sequence.append([BF_site[list_integrase[0]-1], 'attB '+name_int[list_integrase[0]-1],1])
         
         if list_gene_state[0]!=0:
+	    sequence.append([RiboJf, 'RiboJ', 1])
             sequence.append([B0034f, 'B0034', 1])
             sequence.append([spacer_RBSf, 'spacer RBS', 1])
             sequence.append([out_f[list_gene_state[0]-1], out_name[list_gene_state[0]-1], 1])
@@ -205,9 +207,11 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
             sequence.append([out_f[list_gene_state[1]-1], out_name[list_gene_state[1]-1], -1])
             sequence.append([spacer_RBSr, 'spacer RBS', -1])
             sequence.append([B0034r, 'B0034', -1])
+            sequence.append([AraJr, 'AraJ', -1])
 
-        sequence.append([PF_site[list_integrase[1]], 'attP '+name_int[list_integrase[1]],1])
-        sequence.append([PR_site[list_integrase[0]], 'attP '+name_int[list_integrase[0]],-1])
+        sequence.append([PF_site[list_integrase[1]-1], 'attP '+name_int[list_integrase[1]-1],1])
+        sequence.append([sp20_4f, 'sp20_4', 1])
+        sequence.append([PR_site[list_integrase[0]-1], 'attP '+name_int[list_integrase[0]-1],-1])
 
     # construction for 3 inputs
     elif nb_input==3:
@@ -218,7 +222,7 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
             sequence.append([B0034r, 'B0034', -1])
             sequence.append([BydvJr, 'BydvJ', -1])
 
-        sequence.append([BF_site[list_integrase[2]], 'attB '+name_int[list_integrase[2]],1])
+        sequence.append([BF_site[list_integrase[2]-1], 'attB '+name_int[list_integrase[2]-1],1])
         sequence.append([L3S3P21r, 'L3S3P21',-1])
         sequence.append([J61048r, 'J61048', -1])
         
@@ -228,11 +232,11 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
             sequence.append([B0034r, 'B0034', -1])
             sequence.append([ElvJr, 'ElvJ', -1])
 
-        sequence.append([BF_site[list_integrase[0]], 'attB '+name_int[list_integrase[0]],1])
+        sequence.append([BF_site[list_integrase[0]-1], 'attB '+name_int[list_integrase[0]-1],1])
         sequence.append([sp20_1f, 'sp20_1', 1])
-        sequence.append([BR_site[list_integrase[1]], 'attB '+name_int[list_integrase[1]],-1])
+        sequence.append([BR_site[list_integrase[1]-1], 'attB '+name_int[list_integrase[1]-1],-1])
         sequence.append([P6r, 'P6',-1])
-        sequence.append([PR_site[list_integrase[0]], 'attP '+name_int[list_integrase[0]],-1])
+        sequence.append([PR_site[list_integrase[0]-1], 'attP '+name_int[list_integrase[0]-1],-1])
 
         if list_gene_state[1]!=0:
             sequence.append([RiboJf, 'RiboJ', 1])
@@ -251,9 +255,9 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
             sequence.append([B0034r, 'B0034', -1])
             sequence.append([AraJr, 'AraJ', -1])
 
-        sequence.append([PF_site[list_integrase[2]], 'attP '+name_int[list_integrase[2]],1])
+        sequence.append([PF_site[list_integrase[2]-1], 'attP '+name_int[list_integrase[2]-1],1])
         sequence.append([sp20_4f, 'sp20_4', 1])
-        sequence.append([PR_site[list_integrase[1]], 'attP '+name_int[list_integrase[1]],-1])
+        sequence.append([PR_site[list_integrase[1]-1], 'attP '+name_int[list_integrase[1]-1],-1])
 
     # construction for 4 inputs
     elif nb_input==4:
@@ -264,11 +268,11 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
             sequence.append([B0034r, 'B0034', -1])
             sequence.append([BydvJr, 'BydvJ', -1])
 
-        sequence.append([BF_site[list_integrase[3]], 'attB '+name_int[list_integrase[3]],1])
+        sequence.append([BF_site[list_integrase[3]-1], 'attB '+name_int[list_integrase[3]-1],1])
         sequence.append([sp20_1f, 'sp20_1', 1])
-        sequence.append([BF_site[list_integrase[0]], 'attB '+name_int[list_integrase[0]],1])
+        sequence.append([BF_site[list_integrase[0]-1], 'attB '+name_int[list_integrase[0]-1],1])
         sequence.append([sp20_2f, 'sp20_2', 1])
-        sequence.append([BR_site[list_integrase[1]], 'attB '+name_int[list_integrase[1]],-1])
+        sequence.append([BR_site[list_integrase[1]-1], 'attB '+name_int[list_integrase[1]-1],-1])
 
         if list_gene_state[1]!=0:
             
@@ -286,11 +290,11 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
             sequence.append([B0034r, 'B0034', -1])
             sequence.append([PlmJr, 'PlmJ', -1])
 
-        sequence.append([PR_site[list_integrase[0]], 'attP '+name_int[list_integrase[0]],-1])
+        sequence.append([PR_site[list_integrase[0]-1], 'attP '+name_int[list_integrase[0]-1],-1])
         sequence.append([sp20_3f, 'sp20_3', 1])
-        sequence.append([BR_site[list_integrase[2]], 'attB '+name_int[list_integrase[2]],-1])
+        sequence.append([BR_site[list_integrase[2]-1], 'attB '+name_int[list_integrase[2]-1],-1])
         sequence.append([P6r, 'P6',-1])
-        sequence.append([PR_site[list_integrase[1]], 'attP '+name_int[list_integrase[1]],-1])
+        sequence.append([PR_site[list_integrase[1]-1], 'attP '+name_int[list_integrase[1]-1],-1])
         
         if list_gene_state[2]!=0:
             sequence.append([RiboJf, 'RiboJ', 1])
@@ -309,9 +313,9 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
             sequence.append([B0034r, 'B0034', -1])
             sequence.append([AraJr, 'AraJ', -1])
 
-        sequence.append([PF_site[list_integrase[3]], 'attP '+name_int[list_integrase[3]],1])
+        sequence.append([PF_site[list_integrase[3]-1], 'attP '+name_int[list_integrase[3]-1],1])
         sequence.append([sp20_4f, 'sp20_4', 1])
-        sequence.append([PR_site[list_integrase[2]], 'attP '+name_int[list_integrase[2]],-1])
+        sequence.append([PR_site[list_integrase[2]-1], 'attP '+name_int[list_integrase[2]-1],-1])
 
     # construction for 5 inputs
     elif nb_input==5:
@@ -322,10 +326,10 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
             sequence.append([B0034r, 'B0034', -1])
             sequence.append([BydvJr, 'BydvJ', -1])
 
-        sequence.append([BF_site[list_integrase[4]], 'attB '+name_int[list_integrase[4]],1])
+        sequence.append([BF_site[list_integrase[4]-1], 'attB '+name_int[list_integrase[4]-1],1])
         sequence.append([sp20_1f, 'sp20_1', 1])
-        sequence.append([BF_site[list_integrase[1]], 'attB '+name_int[list_integrase[1]],1])
-        sequence.append([BR_site[2], 'attB '+name_int[2],-1])
+        sequence.append([BF_site[list_integrase[1]-1], 'attB '+name_int[list_integrase[1]-1],1])
+        sequence.append([BR_site[list_integrase[2]-1], 'attB '+name_int[list_integrase[2]-1],-1])
 
         if list_gene_state[2]!=0:
             sequence.append([ElvJf, 'ElvJ', 1])
@@ -342,15 +346,15 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
             sequence.append([B0034r, 'B0034', -1])
             sequence.append([PlmJr, 'PlmJ', -1])
 
-        sequence.append([BF_site[list_integrase[0]], 'attB '+name_int[list_integrase[0]],1])
+        sequence.append([BF_site[list_integrase[0]-1], 'attB '+name_int[list_integrase[0]-1],1])
         sequence.append([sp20_2f, 'sp20_2', 1])
-        sequence.append([PF_site[list_integrase[1]], 'attP '+name_int[list_integrase[1]],1])
+        sequence.append([PF_site[list_integrase[1]-1], 'attP '+name_int[list_integrase[1]-1],1])
         sequence.append([J61048r, 'J61048', -1]) 
-        sequence.append([PR_site[list_integrase[0]], 'attP '+name_int[list_integrase[0]],-1])
+        sequence.append([PR_site[list_integrase[0]-1], 'attP '+name_int[list_integrase[0]-1],-1])
         sequence.append([sp20_3f, 'sp20_3', 1])
-        sequence.append([BR_site[list_integrase[3]], 'attB '+name_int[list_integrase[3]],-1])
+        sequence.append([BR_site[list_integrase[3]-1], 'attB '+name_int[list_integrase[3]-1],-1])
         sequence.append([P6r, 'P6',-1])
-        sequence.append([PR_site[list_integrase[2]], 'attP '+name_int[list_integrase[2]],-1])
+        sequence.append([PR_site[list_integrase[2]-1], 'attP '+name_int[list_integrase[2]-1],-1])
         
         if list_gene_state[3]!=0:
             sequence.append([RiboJf, 'RiboJ', 1])
@@ -368,9 +372,9 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
             sequence.append([B0034r, 'B0034', -1])
             sequence.append([AraJr, 'AraJ', -1])
 
-        sequence.append([PF_site[4], 'attP '+name_int[list_integrase[4]],1])
+        sequence.append([PF_site[list_integrase[4]-1], 'attP '+name_int[list_integrase[list_integrase[4]-1]],1])
         sequence.append([sp20_4f, 'sp20_4', 1])
-        sequence.append([PR_site[3], 'attP '+name_int[list_integrase[3]],-1])
+        sequence.append([PR_site[list_integrase[3]-1], 'attP '+name_int[list_integrase[list_integrase[3]-1]],-1])
     
     sequence.append([spNf, 'spacer N', 1])
         
@@ -407,6 +411,5 @@ def design_DNAsequence(nb_input, list_integrase, list_gene_state, nbr_strain, ou
 
    
 """TEST of the design DNA function"""    
-#design_DNAsequence(5,[0,3,2,1,4],[0,1,0,3,1,2],'2','0000101010','../results/0','0')    
-#design_DNAsequence(3,[1,0,2],[0,0,3,0],'3','0000101010','../results/0','0')    
+#design_DNAsequence(5,[0,3,2,1,4],[0,1,0,3,1,2],'2','0000101010','../results/0','0')     
 #design_DNAsequence(3,[2,0,1],[4,2,0,1],'1','0000101010','../results/0','0')    

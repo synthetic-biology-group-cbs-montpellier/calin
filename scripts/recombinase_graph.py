@@ -10,10 +10,11 @@ from matplotlib.patheffects import Stroke
 from matplotlib.patches import Polygon, Ellipse, Wedge, Circle, PathPatch
 
 __author__  = 'Bryan Der <bder@mit.edu>, Voigt Lab, MIT\n\
-               Thomas Gorochowski <tom@chofski.co.uk>, Voigt Lab, MIT\n\
-               Sarah Guiziou <guiziou@cbs.cnrs.fr, Bonnet lab, MIT'
+               Thomas Gorochowski <tom@chofski.co.uk>, Voigt Lab, MIT'
 __license__ = 'MIT'
-__version__ = '2.0'
+__version__ = '1.0'
+
+"""MODIFICATION OF THE CODE BY Sarah GUiziou"""
 
 
 def sbol_recombinase1 (ax, type, num, start, end, prev_end, scale, linewidth, opts):

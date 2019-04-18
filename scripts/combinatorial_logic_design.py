@@ -8,8 +8,7 @@ To find biological implementation of a Boolean function
 """
 
 # module to simplify boolean function, Robert Dick algorithm
-import qm as qm2
-# download at https://pypi.python.org/pypi/qm
+import qm2
 import graphic_combinatorial_modules as gcm
 import design_DNA_sequence_comb as dns
 import os
@@ -39,7 +38,7 @@ In the order of the inputs: Input1(A) Input2(B) Input3(C).
 def function_simplification(on_state, off_state):
 
     dontcares=[]
-    pos_imp=qm2.qm(ones=on_state, zeros=off_state, dc=dontcares)
+    pos_imp=qm2.qm(ones=on_state, zeros=off_state ,dc=dontcares)
       
     return pos_imp
       
@@ -48,7 +47,7 @@ def function_simplification(on_state, off_state):
 Test of function_simplification
 
 """
-#print function_simplification([0,1,5], [2,3,4])    
+#print function_simplification([0,1],[2,3])    
 
 
 """
@@ -119,7 +118,7 @@ def biological_implementation(pos_imp, nb_input):
 Test function biological_implementation
 """
 
-#print biological_implementation(function_simplification([0,1,5]), 3)    
+#print biological_implementation(function_simplification([0,1]), 2)    
 
 """ 
 FUNCTION DESIGN
@@ -161,8 +160,9 @@ def design(output, nb_input, path, directory_name):
         if c=='1': 
             # add X to the on_state list              
             on_state.append(x)
-	else:
-	    off_state.append(x)
+            
+        else:
+            off_state.append(x)
         
         x+=1
       
@@ -178,6 +178,8 @@ def design(output, nb_input, path, directory_name):
     # outputs are the number of inputs, the number of strains needed, the list of computation devices
     # and the list of the connection between integrases and variables.
     [nb_strain, list_component, list_int_var]=biological_implementation(pos_imp, nb_input)
+    
+    print list_int_var
     
     of.write("This "+str(nb_input)+'-input Boolean function '+output+' is implemented using ' +str(nb_strain)+' strain(s).\n\n')
     of.write('DNA sequences are generated using <i>E. coli</i> promoters, terminators and GOI sequences.\n')
@@ -195,13 +197,11 @@ def design(output, nb_input, path, directory_name):
 	    texte_int1+=(str(name+1)+', ')
 	    texte_int2+=(name_int[name]+', ')
 	    
-	
-	
     if nb_input==1:
         texte_int=('Integrase '+texte_int1+' corresponds to '+texte_int2)
     else:
         texte_int=('Integrases '+texte_int1+' correspond respectively to '+texte_int2) 
-	
+
     of.write(texte_int+'\n\n')
     of.close()
     strain=0
@@ -261,5 +261,5 @@ def main(nb_input, output, directory_name):
 Test function
 
 """    
-#main('2','1001', 'example_boolean')
+#main('3','11111110', 'test7')
     
